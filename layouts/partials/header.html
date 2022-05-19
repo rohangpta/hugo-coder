@@ -1,39 +1,35 @@
-<nav class="navigation">
-  <section class="container">
-    <a class="navigation-title" href="{{ .Site.BaseURL | relLangURL }}">
-      {{ .Site.Title }}
-    </a>
-    {{ if or .Site.Menus.main .Site.IsMultiLingual }}
-      <input type="checkbox" id="menu-toggle" />
-      <label class="menu-button float-right" for="menu-toggle">
-        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
-      </label>
-      <ul class="navigation-list">
-        {{ with .Site.Menus.main}}
-          {{ range sort . }}
-            <li class="navigation-item">
-              <a class="navigation-link" href="{{ index (apply (slice .URL) (.Params.urlFunc | default "relLangURL") ".") 0 }}">{{ .Name }}</a>
-            </li>
+<header>
+  <nav class="navbar navbar-dark bg-dark fixed-top navbar-expand-lg font-header">
+    <div class="container-fluid">
+      <a class="navbar-brand" id='green-terminal' href='{{ "/" | absLangURL }}'>
+        {{ .Site.Params.HeaderUsername }}@{{ .Site.Params.HeaderHostname }} ~ $
+      </a>
+      <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse-1"
+        aria-controls="navbar-collapse-1" aria-expanded="false">
+        <span class="visually-hidden">Toggle navigation</span>
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="navbar-collapse-1">
+
+        <ul class="nav navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" id='green-terminal' href='{{ "/" | absLangURL }}'>
+              /home/{{ .Site.Params.HeaderUsername }}</a>
+          </li>
+          {{ range sort .Site.Menus.main "Weight" "desc"}}
+          {{ $name := lower .Name }}
+          <li class="nav-item dropdown">
+            <a class="nav-link" id='green-terminal' href="{{ .URL | absLangURL }}">~/{{ lower .Name }}</a>
+          </li>
           {{ end }}
-        {{ end }}
-        {{ if .Site.IsMultiLingual }}
-          {{ $node := . }}
-          {{ .Scratch.Set "separator" true }}
-          {{ range (default .Site.Home.AllTranslations .Translations) }}
-            {{ if ne $.Site.Language .Language }}
-              {{ if $node.Scratch.Get "separator" }}
-                <li class="navigation-item menu-separator">
-                  <span>|</span>
-                </li>
-                {{ $node.Scratch.Set "separator" false }}
-              {{ end }}
-              <li class="navigation-item">
-                <a href="{{ .Permalink }}">{{ .Language.LanguageName | emojify }}</a>
-              </li>
-            {{ end }}
-          {{ end }}
-        {{ end }}
-      </ul>
-    {{ end }}
-  </section>
-</nav>
+
+        </ul>
+
+
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+</header>

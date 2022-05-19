@@ -237,6 +237,13 @@
    * 3. Remove the padding so developers are not caught out when they zero out
    *    `fieldset` elements in all browsers.
    */
+
+* {
+    margin: 0;
+}
+
+
+  
   
   legend {
     box-sizing: border-box; /* 1 */
